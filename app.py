@@ -52,13 +52,6 @@ def load_history():
 # ======================
 st.title("📈 Google Scholar Citation Tracker")
 
-# Autoodświeżanie co 24h (86 400 000 ms)
-st_autorefresh = st.experimental_rerun  # fallback jeśli brak funkcji
-try:
-    from streamlit_autorefresh import st_autorefresh
-    st_autorefresh(interval=86400000, key="refresh")
-except ImportError:
-    st.info("👉 Jeśli chcesz automatyczne odświeżanie, zainstaluj pakiet: `pip install streamlit-autorefresh`")
 
 # Pobieranie danych (ręczne + przy starcie strony)
 if st.button("🔍 Pobierz aktualne dane"):
@@ -70,10 +63,6 @@ if st.button("🔍 Pobierz aktualne dane"):
 if not os.path.exists(CSV_FILE):
     st.info("Brak danych. Kliknij przycisk powyżej, aby pobrać pierwsze dane.")
 else:
-    # opcjonalnie: automatyczne pobieranie przy każdym uruchomieniu
-    publications = get_publications()
-    save_to_csv(publications)
-
     history = load_history()
     if history is not None:
         st.subheader("📊 Historia cytowań")
